@@ -1406,19 +1406,7 @@
             <div class="form-row-inline">
               <div class="form-row" style="flex:1;">
                 <label>จำนวนทีม</label>
-                <select id="inputTeamCount">
-                  <option value="4">4 ทีม</option>
-                  <option value="8" selected>8 ทีม</option>
-                  <option value="9">9 ทีม</option>
-                  <option value="10">10 ทีม</option>
-                  <option value="11">11 ทีม</option>
-                  <option value="12">12 ทีม</option>
-                  <option value="13">13 ทีม</option>
-                  <option value="14">14 ทีม</option>
-                  <option value="15">15 ทีม</option>
-                  <option value="16">16 ทีม</option>
-                  <option value="32">32 ทีม</option>
-                </select>
+                <select id="inputTeamCount"></select>
               </div>
             </div>
             <div class="form-row">
@@ -2515,8 +2503,23 @@ function renderInfoBar() {
   });
 }
 
+function renderTeamCountSelect() {
+  const sel = document.getElementById('inputTeamCount');
+  if (!sel) return;
+  // Only populate if empty (first render)
+  if (sel.options.length > 0) return;
+  for (let i = 4; i <= 32; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = i + ' ทีม';
+    if (i === state.teamCount) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
 function renderAll() {
   renderInfoBar();
+  renderTeamCountSelect();
   renderBracket('bracket', 'connectors');
   if (document.getElementById('adminOverlay').classList.contains('open')) {
     renderBracket('adminBracket', 'adminConnectors');
