@@ -1318,7 +1318,7 @@
         <div class="logo-placeholder" style="display:none;">PP</div>
       </div>
       <div class="brand-text">
-        <h1 id="headerTitle">Arena of Valor - การแข่งขันคัดเลือกตัวแทนโรงเรียน RoV</h1>
+        <h1 id="headerTitle">ตารางการแข่งขันคัดเลือกตัวแทนโรงเรียน RoV</h1>
         <p id="headerSchool">โรงเรียนพิจิตรพิทยาคม</p>
       </div>
     </div>
@@ -1597,11 +1597,11 @@ function updateConnectionIndicator() {
     document.body.appendChild(indicator);
   }
   if (firebaseConnected) {
-    indicator.textContent = '🟢 เชื่อมต่อ Firebase';
+    indicator.textContent = '🟢 ออนไลน์';
     indicator.style.background = '#dcfce7';
     indicator.style.color = '#16a34a';
   } else {
-    indicator.textContent = '🔴 ออฟไลน์ (ใช้ข้อมูลในเครื่อง)';
+    indicator.textContent = '🔴 รอสักครู่งับ';
     indicator.style.background = '#fee2e2';
     indicator.style.color = '#dc2626';
   }
