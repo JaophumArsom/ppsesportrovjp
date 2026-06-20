@@ -1353,7 +1353,6 @@
           <div class="admin-section-title">ควบคุมทั่วไป</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <button class="btn btn-ghost" id="btnToggleScores" style="width:100%;padding:13px;justify-content:flex-start;">ซ่อน/แสดง คะแนน</button>
-            <button class="btn btn-ghost" id="btnExportPNG" style="width:100%;padding:13px;justify-content:flex-start;">ส่งออก PNG</button>
             <button class="btn btn-danger" id="btnReset" style="width:100%;padding:13px;justify-content:flex-start;">รีเซ็ตรายการแข่งขัน</button>
           </div>
         </div>
@@ -2596,54 +2595,6 @@ document.getElementById('btnReset').addEventListener('click', () => {
   renderAll();
   showToast('รีเซ็ตผลการแข่งขันเรียบร้อย', 'success');
 });
-
-document.getElementById('btnExportPNG').addEventListener('click', exportPNG);
-
-
-function exportPNG() {
-  showToast('กำลังส่งออก PNG...');
-  const wrapper = document.querySelector('.bracket-wrapper');
-  const w = wrapper.offsetWidth;
-  const h = wrapper.offsetHeight;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-    <defs>
-      <style>
-        text { font-family: 'Sarabun', sans-serif; }
-      </style>
-      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#fef5f9"/>
-        <stop offset="100%" stop-color="#fdf2f8"/>
-      </linearGradient>
-    </defs>
-    <rect width="${w}" height="${h}" fill="url(#bg)"/>
-    <text x="${w/2}" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a3a8f">${escapeHtml(TOURNAMENT_NAME)}</text>
-    <text x="${w/2}" y="50" text-anchor="middle" font-size="12" fill="#ec4899">โรงเรียนพิจิตรพิทยาคม</text>
-  </svg>`;
-  const blob = new Blob([svg], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
-  const img = new Image();
-  img.onload = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = w * 2;
-    canvas.height = h * 2;
-    const ctx = canvas.getContext('2d');
-    ctx.scale(2, 2);
-    ctx.drawImage(img, 0, 0);
-    URL.revokeObjectURL(url);
-    canvas.toBlob(b => {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(b);
-      a.download = TOURNAMENT_NAME + '.png';
-      a.click();
-      showToast('ส่งออก PNG เรียบร้อย', 'success');
-    });
-  };
-  img.onerror = () => {
-    window.open(url, '_blank');
-    showToast('เปิด SVG ในแท็บใหม่แทน');
-  };
-  img.src = url;
-}
 
 /* ============================================================
    COLLAPSIBLE SECTIONS & REFRESH
